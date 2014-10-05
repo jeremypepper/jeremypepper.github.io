@@ -369,3 +369,25 @@ footer a:hover {
 
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
 @media only screen and (max-width: 479px) {}
+
+
+/* jeremy added */
+.social-media-list li {
+    list-style: none;
+    margin-left: 0;
+}
+
+
+/**
+ * Icons
+ */
+.icon > svg {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        vertical-align: middle;
+}
+
+.icon path {
+    fill: $grey-color;
+}
