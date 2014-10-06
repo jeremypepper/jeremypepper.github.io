@@ -1,0 +1,77 @@
+---
+title: twitch.tv viewer
+---
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+
+	<link rel="stylesheet" href="{{ "/stylesheets/stylesheet.css" | prepend: site.baseurl }}">
+	<style>
+	#live_embed_player_flash {
+	  box-sizing: border-box;
+	  display: none;
+	}
+
+	body {
+	  margin: 0;
+	}
+
+	ul li {
+	  list-style-type: none;
+	  margin-bottom: 4px;
+	}
+
+	.overlay {
+	  font-family: Helvetica, Arial;
+	  font-size: 12px;
+	  position: absolute;
+	  z-index: 1000;
+	  bottom: 7px;
+	  right: 111px;
+	  color: #CCC;
+	}
+
+	.channel-item .status {
+	  display: none;
+	}
+
+
+	</style>
+
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+</head>
+
+
+<div class="fullwidth">
+  <object type="application/x-shockwave-flash" 
+          height="100%" 
+          width="100%" 
+          id="live_embed_player_flash" 
+          data="" 
+          bgcolor="#000000">
+    <param  name="allowFullScreen" 
+            value="true" />
+    <param  name="allowScriptAccess" 
+            value="always" />
+    <param  name="allowNetworking" 
+            value="all" />
+    <param  name="movie" 
+            value="http://www.twitch.tv/widgets/live_embed_player.swf" />
+    <param  name="flashvars" 
+            value="" />
+  </object>
+</div>
+<div class="overlay">
+  <div>Collapse</div>
+<div>
+
+<script src="https://code.jquery.com/jquery-2.1.1.min.js">
+</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js">
+</script>
+
+<script src="/js/twitch.js">
+</script>
