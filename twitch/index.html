@@ -8,65 +8,95 @@ title: twitch.tv viewer
 
     <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
 
-	<link rel="stylesheet" href="{{ "/stylesheets/stylesheet.css" | prepend: site.baseurl }}">
-	<style>
-	#live_embed_player_flash {
-	  box-sizing: border-box;
-	  display: none;
-	}
+  <link rel="stylesheet" href="{{ "/stylesheets/stylesheet.css" | prepend: site.baseurl }}">
+  <style>
+    .videoplayer {
+        position: absolute;
+        top:0;
+        left:0;
+        width:100%;
+        height:100%;
+        display: none;
+  }
 
-	body {
-	  margin: 0;
-	}
+  .collapsed {
+    position: relative;
+    height: 380px;
+    width: 620px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
 
-	ul li {
-	  list-style-type: none;
-	  margin-bottom: 4px;
-	}
+  #live_embed_player_flash {
+    box-sizing: border-box;
+  }
 
-	.overlay {
-	  font-family: Helvetica, Arial;
-	  font-size: 12px;
-	  position: absolute;
-	  z-index: 1000;
-	  bottom: 7px;
-	  right: 111px;
-	  color: #CCC;
-	}
+  body {
+    margin: 0;
+  }
 
-	.channel-item .status {
-	  display: none;
-	}
+  ul li {
+    list-style-type: none;
+    margin-bottom: 4px;
+  }
+
+  .overlay {
+    font-family: Helvetica, Arial;
+    font-size: 12px;
+    position: absolute;
+    z-index: 1000;
+    bottom: 5px;
+    left: 160px;
+    color: #CCC;
+  }
+
+  .expand {
+    display: none;
+  }
+
+  .channel-item .status {
+    display: none;
+  }
 
 
-	</style>
+
+  </style>
 
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
 </head>
 
+<header>
+  <h1>
+    {{page.title}}
+  </h1>
+</header>
 
 <div class="fullwidth">
-  <object type="application/x-shockwave-flash" 
+  <div class="videoplayer">
+    <div class="overlay">
+      <a href="javascript:void(0)" class="collapse">Collapse</a>
+      <a href="javascript:void(0)" class="expand">Expand</a>
+    </div>
+  
+    <object type="application/x-shockwave-flash" 
           height="100%" 
           width="100%" 
           id="live_embed_player_flash" 
           data="" 
           bgcolor="#000000">
-    <param  name="allowFullScreen" 
-            value="true" />
-    <param  name="allowScriptAccess" 
-            value="always" />
-    <param  name="allowNetworking" 
-            value="all" />
-    <param  name="movie" 
-            value="http://www.twitch.tv/widgets/live_embed_player.swf" />
-    <param  name="flashvars" 
-            value="" />
-  </object>
+      <param  name="allowFullScreen" 
+              value="true" />
+      <param  name="allowScriptAccess" 
+              value="always" />
+      <param  name="allowNetworking" 
+              value="all" />
+      <param  name="movie" 
+              value="http://www.twitch.tv/widgets/live_embed_player.swf" />
+      <param  name="flashvars" 
+              value="" />
+   </object>
+  </div>
 </div>
-<div class="overlay">
-  <div>Collapse</div>
-<div>
 
 <script src="https://code.jquery.com/jquery-2.1.1.min.js">
 </script>

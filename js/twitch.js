@@ -7,14 +7,16 @@ $(document).ready(function() {
     + '<span class="game"><%=channel.game%></span>'
     + '<span class="status"><%=channel.status%></span> '
     + '</li>')
-  function setChannel(channel) {
-    //var channel = "trick2g";
-    var $player = $("#live_embed_player_flash");
-    $player.attr("data", "http://www.twitch.tv/widgets/live_embed_player.swf?channel=" + channel)
-      .width("100%")
-      .show();
 
-    $player.find("param[name='flashvars']").attr("hostname=www.twitch.tv&auto_play=true&channel=" + channel);
+  function setChannel(channel) {
+    if( channel) {
+      var $player = $("#live_embed_player_flash");
+      $player.attr("data", "http://www.twitch.tv/widgets/live_embed_player.swf?channel=" + channel)
+        .width("100%")
+      $(".videoplayer").show();
+
+      $player.find("param[name='flashvars']").attr("hostname=www.twitch.tv&auto_play=true&channel=" + channel);
+    }
   }
 
   function getStreams() {
@@ -37,13 +39,33 @@ $(document).ready(function() {
       }});
   }
 
-  function attach() {
-    $("body").on("click", "a", function(event) {
-      var name = $(event.target).attr("href").replace(/^#/, "");
-      setChannel(name);
-    });
+  function getHashChannel() {
+    var channel = window.location.hash.replace(/^#/, "");
+    return channel;
   }
+
+
+
+  function attach() {
+    $("body").on("click", "a.collapse", function(event) {
+      $(".collapse").hide();
+      $(".expand").show();
+      $(".videoplayer").addClass("collapsed")
+    });
+
+    $("body").on("click", "a.expand", function(event) {
+      $(".collapse").show();
+      $(".expand").hide();
+      $(".videoplayer").removeClass("collapsed")
+    });
+    
+    window.onhashchange = function () {
+      setChannel(event.newURL.replace(/^#/, ""));
+    }
+  }
+
 
   getStreams();
   attach();
+  setChannel(getHashChannel());
 });
