@@ -11,11 +11,10 @@ $(document).ready(function() {
   function setChannel(channel) {
     if( channel) {
       var $player = $("#live_embed_player_flash");
-      $player.attr("data", "http://www.twitch.tv/widgets/live_embed_player.swf?channel=" + channel)
-        .width("100%")
+      $player.attr("data", "http://www.twitch.tv/widgets/live_embed_player.swf?channel=" + channel);
       $(".videoplayer").show();
-
       $player.find("param[name='flashvars']").attr("hostname=www.twitch.tv&auto_play=true&channel=" + channel);
+      expand();
     }
   }
 
@@ -35,7 +34,7 @@ $(document).ready(function() {
             $container.append(template(stream));
           });
         }
-        $("body").append($container);
+        $("#content").html($container);
       }});
   }
 
@@ -44,18 +43,23 @@ $(document).ready(function() {
     return channel;
   }
 
-  function attach() {
-    $("body").on("click", "a.collapse", function(event) {
+  function collapse(event) {
+      $("#content").show();
       $(".collapse").hide();
       $(".expand").show();
       $(".videoplayer").addClass("collapsed")
-    });
+    }
 
-    $("body").on("click", "a.expand", function(event) {
-      $(".collapse").show();
-      $(".expand").hide();
-      $(".videoplayer").removeClass("collapsed")
-    });
+  function expand() {
+    $("#content").hide();
+    $(".collapse").show();
+    $(".expand").hide();
+    $(".videoplayer").removeClass("collapsed")
+  }
+
+  function attach() {
+    $("body").on("click", "a.collapse", collapse);
+    $("body").on("click", "a.expand", expand);
     
     window.onhashchange = function () {
       var channel = event.newURL.match(/#(.*)/)[1];

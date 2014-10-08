@@ -10,13 +10,13 @@ title: twitch.tv viewer
 
   <link rel="stylesheet" href="{{ "/stylesheets/stylesheet.css" | prepend: site.baseurl }}">
   <style>
-    .videoplayer {
-        position: absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-        display: none;
+  .videoplayer {
+      position: absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      display: none;
   }
 
   .collapsed {
@@ -58,7 +58,9 @@ title: twitch.tv viewer
     display: none;
   }
 
+  .content {
 
+  }
 
   </style>
 
@@ -97,7 +99,8 @@ title: twitch.tv viewer
    </object>
   </div>
 </div>
-
+<div id="content" class="content">
+</div>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js">
 </script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js">
