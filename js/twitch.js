@@ -44,8 +44,6 @@ $(document).ready(function() {
     return channel;
   }
 
-
-
   function attach() {
     $("body").on("click", "a.collapse", function(event) {
       $(".collapse").hide();
@@ -60,7 +58,8 @@ $(document).ready(function() {
     });
     
     window.onhashchange = function () {
-      setChannel(event.newURL.replace(/^#/, ""));
+      var channel = event.newURL.match(/#(.*)/)[1];
+      setChannel(channel);
     }
   }
 
