@@ -35,11 +35,6 @@ title: twitch.tv viewer
     margin: 0;
   }
 
-  ul li {
-    list-style-type: none;
-    margin-bottom: 4px;
-  }
-
   .overlay {
     font-family: Helvetica, Arial;
     font-size: 12px;
@@ -58,8 +53,28 @@ title: twitch.tv viewer
     display: none;
   }
 
-  .content {
+  .content ul {
+    display: table;
+  }
 
+  .content ul li {
+    display: table-row;
+    list-style-type: none;
+    margin-bottom: 4px;
+    padding-left: 0;
+    line-height: 1.7;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  
+  .content ul li > * {
+    display: table-cell;
+    padding-right: 10px;
+  }
+
+  .content ul li a:hover {
+    text-shadow: 0px 0px 2px #999, 0px 0px 4px #ccc;
+    color: #fff;
   }
 
   </style>
@@ -67,13 +82,22 @@ title: twitch.tv viewer
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
 </head>
 
-<header>
-  <h1>
-    {{page.title}}
-  </h1>
-</header>
 
-<div class="fullwidth">
+
+<div id="container">
+  <div class="inner">
+    <header>
+      <h1>
+        {{page.title}}
+      </h1>
+    </header>
+    <h2>
+      Top Streams
+    </h2>
+    <div id="content" class="content">
+
+    </div>
+  </div>
   <div class="videoplayer">
     <div class="overlay">
       <a href="javascript:void(0)" class="collapse">Collapse</a>
@@ -99,12 +123,11 @@ title: twitch.tv viewer
    </object>
   </div>
 </div>
-<div id="content" class="content">
 </div>
+
 <script src="https://code.jquery.com/jquery-2.1.1.min.js">
 </script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js">
 </script>
-
 <script src="/js/twitch.js">
 </script>
