@@ -1,9 +1,7 @@
-
 $(document).ready(function() {
   var template = _.template(
     '<li class="channel-item">'
     + '<a href="#<%=channel.name%>"><%=channel.name%></a> '
-    // + '<a href="#<%=channel.game%>"><%=channel.game%></a> '
     + '<a class="game" href="?game=<%=channel.game%>"><%=channel.game%></a>'
     + '<span class="status"><%=channel.status%></span> '
     + '</li>')
@@ -14,7 +12,7 @@ $(document).ready(function() {
       $player.attr("data", "http://www.twitch.tv/widgets/live_embed_player.swf?channel=" + channel);
       $(".videoplayer").show();
       $player.find("param[name='flashvars']").attr("hostname=www.twitch.tv&auto_play=true&channel=" + channel);
-      expand();
+      collapse();
     }
   }
 
@@ -24,6 +22,7 @@ $(document).ready(function() {
         buildlinks(data)
       }
     );
+    $("h2").text("Top Streams");
   }
 
   function buildlinks(data, gameOverride) {
@@ -61,11 +60,6 @@ $(document).ready(function() {
     });
   }
 
-  function getHashChannel() {
-    var channel = window.location.hash.replace(/^#/, "");
-    return channel;
-  }
-
   function collapse(event) {
       $("#content").show();
       $(".collapse").hide();
@@ -81,30 +75,84 @@ $(document).ready(function() {
   }
 
   function gameClick(event) {
-    $("#content").html("");
+    
     var game = stripHash(event.target.text);
+    setGame(game);
+    window.location.hash = buildArgs(getHashChannel(), game);
+    event.preventDefault();
+  }
+
+  function setGame(game) {
+    $("#content").html("");
     getStreamsByGame(game);
     $("h2").text(game);
-    history.pushState({}, document.title, event.target.href);
-    history.pushState(event.target.href)
-    event.preventDefault();
+  }
+
+  function buildArgs(stream, game) {
+    var hash = "#";
+    if (stream) {
+      hash += stream;
+    }
+
+    if (game) {
+      hash += "?game=" + game;
+    }
+    return hash;
+  }
+
+  function getHashArgs() {
+    args = {};
+    var hash = window.location.hash;
+    if (hash) {
+      var parts = hash.split("?");
+      var nameMatch = parts[0].match(/^#(.*)($|\?)/);
+      if (nameMatch && nameMatch.length >= 2) {
+        args.channel = nameMatch[1];
+      }
+
+      if (parts[1]) {
+        var gameMatch = parts[1].match(/game=(.*)($|&)/);
+        if(gameMatch && gameMatch.length >=2) {
+          args.game = gameMatch[1];
+        }
+      }
+    }
+    return args;
+  }
+
+  function getHashChannel() {
+    var hash = window.location.hash;
+    if (hash) {
+      var match = hash.split("?")[0].match(/^#(.*)($|\?)/);
+      if (match && match.length >= 2) {
+        return match[1];
+      }
+    }
+  }
+
+  function setStateFromHash() {
+    var args = getHashArgs();
+    if (args.channel) {
+      setChannel(args.channel);
+    }
+    if (args.game) {
+      setGame(args.game);
+    } else {
+      getStreams();
+    }
   }
 
   function attach() {
     $("body").on("click", "a.collapse", collapse);
     $("body").on("click", "a.expand", expand);
     $("body").on("click", "a.game", gameClick);
-    window.onhashchange = function () {
-      var channel = event.newURL.match(/#(.*)/)[1];
-      setChannel(channel);
-    }
+    window.onhashchange = setStateFromHash;
   }
 
   function stripHash(text) {
     return text.replace(/^#/, "")
   }
 
-  getStreams();
   attach();
-  setChannel(getHashChannel());
+  setStateFromHash();
 });
